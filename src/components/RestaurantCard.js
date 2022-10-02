@@ -27,17 +27,21 @@ const Root = styled('div')(({ theme }) => ({
   },
 }))
 
-export default function RestaurantCard({ name, location }) {
+export default function RestaurantCard({ name, locationLine1, locationLine2 }) {
     return (
     <Root className={classes.root}>
         <Card variant="outlined" className={classes.cardContainer}>
             <CardContent>
+                <img style = {{width: 200, height: 200}} src={require('../imgs/restaurant.jpg')} />
                 <Typography className={classes.nameText}>
                 {name}
                 </Typography>
                 <Typography className={classes.locationText}>
-                {location}
-                </Typography>
+                {locationLine1}
+                </Typography>            
+                <Typography className={classes.locationText}>
+                {locationLine2}
+                </Typography>              
             </CardContent>
         </Card>
     </Root>

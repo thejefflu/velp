@@ -3,6 +3,7 @@ import './App.css'
 import Airtable from 'airtable'
 import RestaurantCard from './components/RestaurantCard';
 import ReviewCard from './components/ReviewCard';
+import MuiMultiselect from './components/MuiMultiselect';
 
 function RestaurantDetails() {
     const base = new Airtable({apiKey: 'keyT03fHxG2eAkS6n'}).base('appYZQoyc6msqgb4K');
@@ -41,14 +42,19 @@ function RestaurantDetails() {
         key={item.review_id}
         email = {item.email}
         overallRating = {item.overall_rating}
-        paragraph = {item.review_paragraph}          
+        paragraph = {item.review_paragraph}   
+        // tags = {item.tags}       
     />
     )); //did not use Date
 
   return (
-    <div style = {{padding: 30 , display: 'flex', justifyContent: "center", flexDirection: 'column'}}>
-      <RestaurantCard name = "Jeff's Jelly Beans" location = "200 De Naur Drive"/>
-      {reviews}
+    <div style = {{padding: 100 , display: 'flex', justifyContent: "space-evenly", flexDirection: 'row'}}>
+      <div>
+        <MuiMultiselect/>
+        <RestaurantCard name = "Jeff's Jelly Beans" locationLine1 = "200 De Naur Drive" locationLine2 = "Los Angeles, CA 90001"/>      
+      </div>
+      <div> {reviews} </div>
+      
     </div>   
   );
 }
