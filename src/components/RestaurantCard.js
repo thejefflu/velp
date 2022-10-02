@@ -11,15 +11,12 @@ const classes = {
 const Root = styled('div')(({ theme }) => ({
   [`&.${classes.root}`]: {
     display: 'flex',
-    alignItems: 'center',
-    backgroundColor: theme.palette.primary.main
+    alignItems: 'center'
   },
   [`& .${classes.nameText}`]: {
     fontSize: '16px',
     marginBottom: '1%',
     fontWeight: 'bolder',
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     color: '#000000',
   },

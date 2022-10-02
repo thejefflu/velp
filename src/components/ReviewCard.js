@@ -11,15 +11,12 @@ const classes = {
 const Root = styled('div')(({ theme }) => ({
   [`&.${classes.root}`]: {
     display: 'flex',
-    alignItems: 'center',
-    backgroundColor: theme.palette.primary.main
+    alignItems: 'center'
   },
   [`& .${classes.bigText}`]: {
     fontSize: '16px',
     marginBottom: '1%',
     fontWeight: 'bolder',
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     color: '#000000',
   },
@@ -30,16 +27,13 @@ const Root = styled('div')(({ theme }) => ({
   },
 }))
 
-export default function ReviewCard({ email, overallRating, paragraph, dishnamelist }) {
+export default function ReviewCard({ email, overallRating, paragraph }) {
     return (
     <Root className={classes.root}>
         <Card variant="outlined" className={classes.cardContainer}>
             <CardContent>
                 <Typography className={classes.bigText}>
                 {email}
-                </Typography>
-                <Typography className={classes.bigText}>
-                {dishnamelist}
                 </Typography>
                 <Typography className={classes.smallText}>
                 Overall Rating: {overallRating}
