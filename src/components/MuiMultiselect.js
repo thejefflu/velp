@@ -26,19 +26,7 @@ const dietaryrestrictions = [
   'Vegetarian',
 ];
 
-export default function MultipleSelectCheckmarks() {
-  const [personalDietaryrestrictions, setPersonalDietaryrestrictions] = React.useState([]);
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonalDietaryrestrictions(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
-
+export default function MuiMultiselect(props) {
   return (
     <div>
       <FormControl sx={{ m: 1, width: 300 }}>
@@ -47,15 +35,15 @@ export default function MultipleSelectCheckmarks() {
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"
           multiple
-          value={personalDietaryrestrictions}
-          onChange={handleChange}
+          value={props.value}
+          onChange={(e) => props.setter(e.target.value)}
           input={<OutlinedInput label="Dietary Restrictions" />}
           renderValue={(selected) => selected.join(', ')}
           MenuProps={MenuProps}
         >
           {dietaryrestrictions.map((dietaryrestriction) => (
             <MenuItem key={dietaryrestriction} value={dietaryrestriction}>
-              <Checkbox checked={personalDietaryrestrictions.indexOf(dietaryrestriction) > -1} />
+              <Checkbox checked={props.value.indexOf(dietaryrestriction) > -1} />
               <ListItemText primary={dietaryrestriction} />
             </MenuItem>
           ))}

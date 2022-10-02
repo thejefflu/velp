@@ -1,6 +1,8 @@
 import React from "react";
 import { Card, CardContent, Typography } from '@mui/material/';
 import { styled } from '@mui/material/styles';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 
 const PREFIX = 'RCard';
 const classes = {
@@ -27,7 +29,14 @@ const Root = styled('div')(({ theme }) => ({
   },
 }))
 
-export default function ReviewCard({ email, overallRating, paragraph }) {
+export default function ReviewCard({ email, overallRating, paragraph, tags }) {  
+
+  const tagsDisplay = tags.map((item) => (
+    <Chip
+        label = {item}
+    />
+    ));
+
     return (
     <Root className={classes.root}>
         <Card variant="outlined" className={classes.cardContainer}>
@@ -38,6 +47,9 @@ export default function ReviewCard({ email, overallRating, paragraph }) {
                 <Typography className={classes.smallText}>
                 Overall Rating: {overallRating}
                 </Typography>
+                <Stack>
+                {tagsDisplay}
+                </Stack>
                 <Typography className={classes.smallText}>
                 {paragraph}
                 </Typography>

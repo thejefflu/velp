@@ -6,35 +6,37 @@ import ReviewCard from './components/ReviewCard';
 import MuiMultiselect from './components/MuiMultiselect';
 
 function RestaurantDetails() {
+  //hardcoded restaurant name (did not have single-developer team bandwidth to do any more workflow screens)
+  const restaurant = "Jeff's Jelly Beans";
+
+  const [personalDietaryrestrictions, setPersonalDietaryrestrictions] = React.useState([]);
     const base = new Airtable({apiKey: 'keyT03fHxG2eAkS6n'}).base('appYZQoyc6msqgb4K');
 
     const [reviewList, setReviewList] = useState([]);
 
-    const getItems = async (restaurant) => {
+    const getReviews = async (restaurant) => {
         const list = [];
-        console.log("getItems");
         await base('reviews').select({
             filterByFormula: `({restaurant}="Jeff's Jelly Beans")` 
         })
-        // .all()
-        // .then((records) => {console.log(records)})
         .eachPage((records, fetchNextPage) => {
           records.forEach((record) => {
             console.log("record hit!")
-            const item = record.fields;        
-            list.push(item);    
+            const review = record.fields;        
+            list.push(review);    
           });
           fetchNextPage();
         });
         setReviewList(list);
     };
 
-    useEffect(() => {
-        console.log("use effect hit?")
-    //for now restaurant is hardcoded
-    const restaurant = "Jeff's Jelly Beans";
-    getItems(restaurant);
-    }, []);
+    useEffect(() => {     
+      getReviews(restaurant);
+    }, [])
+
+    useEffect(() => {      
+      console.log(personalDietaryrestrictions);
+    }, [personalDietaryrestrictions]);
 
     const reviews = reviewList.map((item) => (
     <ReviewCard
@@ -43,14 +45,14 @@ function RestaurantDetails() {
         email = {item.email}
         overallRating = {item.overall_rating}
         paragraph = {item.review_paragraph}   
-        // tags = {item.tags}       
+        tags = {item.tags}       
     />
     )); //did not use Date
 
   return (
     <div style = {{padding: 100 , display: 'flex', justifyContent: "space-evenly", flexDirection: 'row'}}>
       <div>
-        <MuiMultiselect/>
+        <MuiMultiselect value = {personalDietaryrestrictions} setter = {setPersonalDietaryrestrictions}/>
         <RestaurantCard name = "Jeff's Jelly Beans" locationLine1 = "200 De Naur Drive" locationLine2 = "Los Angeles, CA 90001"/>      
       </div>
       <div> {reviews} </div>
