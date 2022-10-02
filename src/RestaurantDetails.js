@@ -13,6 +13,7 @@ function RestaurantDetails() {
     const base = new Airtable({apiKey: 'keyT03fHxG2eAkS6n'}).base('appYZQoyc6msqgb4K');
 
     const [reviewList, setReviewList] = useState([]);
+    const [filteredList, setFilteredList] = useState([]);
 
     const getReviews = async (restaurant) => {
         const list = [];
@@ -28,26 +29,65 @@ function RestaurantDetails() {
           fetchNextPage();
         });
         setReviewList(list);
+        setFilteredList(list);
     };
+
+    const filterReviews = () => {
+      let list = [];
+      if (personalDietaryrestrictions.length === 0){
+        setFilteredList(reviewList);
+      }
+      else{
+        //filter checks each element in the list for a condition and only returns the elements that has it
+        //what som does is run a test on every element of an array and returns true if at least one of them passes
+
+        //filter is good for the outer loop
+        //some is good for the condition.
+        // list = reviewList.filter((review)=>{
+        //   personalDietaryrestrictions.forEach((restriction)=> {
+        //     if (review.tags.some(restriction)) return true;
+        //   }
+        //   return false;
+        // })
+        console.log(reviewList[0].tags);
+        console.log(personalDietaryrestrictions);
+        console.log(reviewList[0].tags.some((value) => personalDietaryrestrictions.indexOf(value) !== -1))
+        list = reviewList.filter((review)=>{
+          return review.tags.some((value) => personalDietaryrestrictions.indexOf(value) !== -1)
+        })
+        setFilteredList(list);
+        // reviewList.forEach((review)=> {
+        //   personalDietaryrestrictions.forEach((restriction)=> {
+        //     if (review.tags.includes(restriction) && !filteredList.includes(review)){
+        //       list.push(review);
+        //     }
+        //   });
+        //   setFilteredList(list);
+        // })
+      }
+    }
 
     useEffect(() => {     
       getReviews(restaurant);
     }, [])
 
+    const reviews = filteredList.map((item) => (
+      <ReviewCard
+          itemID={item.review_id}
+          key={item.review_id}
+          email = {item.email}
+          overallRating = {item.overall_rating}
+          paragraph = {item.review_paragraph}   
+          tags = {item.tags}       
+      />
+      )); //did not use Date
+
     useEffect(() => {      
       console.log(personalDietaryrestrictions);
+      filterReviews();
     }, [personalDietaryrestrictions]);
 
-    const reviews = reviewList.map((item) => (
-    <ReviewCard
-        itemID={item.review_id}
-        key={item.review_id}
-        email = {item.email}
-        overallRating = {item.overall_rating}
-        paragraph = {item.review_paragraph}   
-        tags = {item.tags}       
-    />
-    )); //did not use Date
+    
 
   return (
     <div style = {{padding: 100 , display: 'flex', justifyContent: "space-evenly", flexDirection: 'row'}}>

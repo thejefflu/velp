@@ -20,10 +20,10 @@ const MenuProps = {
 };
 
 const dietaryrestrictions = [
-  'Peanut Allergy',
-  'Nut Allergy',
-  'Vegan',
-  'Vegetarian',
+  'Peanut Allergy Friendly',
+  'Nut Allergy Friendly',
+  'Vegan Friendly',
+  'Vegetarian Friendly',
 ];
 
 export default function MuiMultiselect(props) {
